@@ -23,6 +23,9 @@
  * Still in the public domain.
  */
 
+// This config.h file is generated in the CMake configuration step
+#include <exv_conf.h>
+
 #include <sys/types.h>
 
 #ifdef _MSC_VER

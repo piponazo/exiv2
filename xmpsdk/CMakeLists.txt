@@ -45,11 +45,6 @@ target_include_directories(xmp
 # TODO : We should only add this definition for Windows
 target_compile_definitions(xmp PRIVATE XML_STATIC)
 
-check_include_file( "stdint.h"  EXV_HAVE_STDINT_H )
-if (EXV_HAVE_STDINT_H)
-    target_compile_definitions(xmp PRIVATE EXV_HAVE_STDINT_H)
-endif()
-
 # http://stackoverflow.com/questions/10046114/in-cmake-how-can-i-test-if-the-compiler-is-clang
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # 1123 - hide xmpsdk symbols
