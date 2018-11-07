@@ -12,6 +12,7 @@ add_executable(unit_tests mainTestRunner.cpp
     test_helper_functions.cpp
     test_slice.cpp
     test_image_int.cpp
+    test_basicio.cpp
     $<TARGET_OBJECTS:exiv2lib_int>
 )
 
