@@ -35,12 +35,15 @@
 #include <string>
 #include <memory>
 #include <iostream>
-#include <cstring>
+#include <fstream>      // write the temporary file
+#include <ctime>        // timestamp for the name of temporary file
+#include <cstring>      // std::memcpy
 #include <cassert>
 #include <cstdio>                       // for remove, rename
 #include <cstdlib>                      // for alloc, realloc, free
 #include <sys/types.h>                  // for stat, chmod
 #include <sys/stat.h>                   // for stat, chmod
+#include <fcntl.h>      // _O_BINARY in FileIo::FileIo
 
 #ifdef EXV_HAVE_SYS_MMAN_H
 # include <sys/mman.h>                  // for mmap and munmap
