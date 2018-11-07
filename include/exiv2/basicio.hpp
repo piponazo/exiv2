@@ -301,10 +301,7 @@ namespace Exiv2
         IoCloser& operator=(const IoCloser&);
     };  // class IoCloser
 
-    /*!
-      @brief Provides binary file IO by implementing the BasicIo
-          interface.
-     */
+    //! @brief Provides binary file IO by implementing the BasicIo interface.
     class EXIV2API FileIo : public BasicIo
     {
     public:

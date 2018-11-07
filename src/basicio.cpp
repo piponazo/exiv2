@@ -963,13 +963,13 @@ namespace Exiv2 {
 #ifdef EXV_UNICODE_PATH
         if (p_->wpMode_ == Impl::wpUnicode) {
             p_->fp_ = ::_wfopen(wpath().c_str(), s2ws(mode).c_str());
-        }
-        else
+        } else
 #endif
         {
             p_->fp_ = ::fopen(path().c_str(), mode.c_str());
         }
-        if (!p_->fp_) return 1;
+        if (!p_->fp_)
+            return 1;
         return 0;
     }
 
@@ -981,10 +981,13 @@ namespace Exiv2 {
     int FileIo::close()
     {
         int rc = 0;
-        if (munmap() != 0) rc = 2;
+        if (munmap() != 0) {
+            rc = 2;
+        }
         if (p_->fp_ != 0) {
-            if (std::fclose(p_->fp_) != 0) rc |= 1;
-            p_->fp_= 0;
+            if (std::fclose(p_->fp_) != 0)
+                rc |= 1;
+            p_->fp_ = 0;
         }
         return rc;
     }
