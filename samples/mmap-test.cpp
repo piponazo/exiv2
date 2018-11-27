@@ -3,6 +3,7 @@
 // Simple mmap tests
 
 #include <exiv2/exiv2.hpp>
+#include <exiv2/FileIo.hpp>
 
 #include <iostream>
 #include <cstring>

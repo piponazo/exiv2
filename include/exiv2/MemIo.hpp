@@ -20,6 +20,7 @@
 #pragma once
 
 #include "basicio.hpp"
+#include "FileIo.hpp"
 
 namespace Exiv2 {
 

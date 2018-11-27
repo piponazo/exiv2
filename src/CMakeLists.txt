@@ -56,6 +56,7 @@ add_library( exiv2lib
     epsimage.cpp            ../include/exiv2/epsimage.hpp
     error.cpp               ../include/exiv2/error.hpp
     exif.cpp                ../include/exiv2/exif.hpp
+    FileIo.cpp              ../include/exiv2/FileIo.hpp
     futils.cpp              ../include/exiv2/futils.hpp
     gifimage.cpp            ../include/exiv2/gifimage.hpp
     http.cpp                ../include/exiv2/http.hpp

@@ -3,6 +3,7 @@
 // Read an XMP packet from a file, parse and re-serialize it.
 
 #include <exiv2/exiv2.hpp>
+#include <exiv2/FileIo.hpp>
 
 #include <string>
 #include <iostream>

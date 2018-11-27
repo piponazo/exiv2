@@ -3,9 +3,11 @@
 // Sample program to extract a Minolta thumbnail from the makernote
 
 #include <cassert>
-#include "error.hpp"
-#include "exif.hpp"
-#include "image.hpp"
+
+#include <exiv2/FileIo.hpp>
+#include <exiv2/error.hpp>
+#include <exiv2/exif.hpp>
+#include <exiv2/image.hpp>
 
 int main(int argc, char* const argv[])
 {

@@ -3,6 +3,7 @@
 // First and very simple TIFF write test.
 
 #include <exiv2/exiv2.hpp>
+#include <exiv2/FileIo.hpp>
 #include <enforce.hpp>
 
 #include <string>

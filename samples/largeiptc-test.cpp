@@ -2,6 +2,7 @@
 // Test for large (>65535 bytes) IPTC buffer
 
 #include <exiv2/exiv2.hpp>
+#include <exiv2/FileIo.hpp>
 
 #include <iostream>
 #include <cassert>
