@@ -145,8 +145,9 @@ namespace Exiv2 {
 #ifdef DEBUG
         std::cerr << "Exiv2::PsdImage::readMetadata: Reading Photoshop file " << io_->path() << "\n";
 #endif
-        if (io_->open() != 0)
-        {
+        if (io_.get() == NULL) {
+            throw Error(kerDataSourceOpenFailed);
+        } else if (io_->open() != 0) {
             throw Error(kerDataSourceOpenFailed, io_->path(), strError());
         }
         IoCloser closer(*io_);
@@ -345,7 +346,9 @@ namespace Exiv2 {
 
     void PsdImage::writeMetadata()
     {
-        if (io_->open() != 0)
+        if (io_.get() == NULL) {
+            throw Error(kerDataSourceOpenFailed);
+        } else if (io_->open() != 0)
         {
             throw Error(kerDataSourceOpenFailed, io_->path(), strError());
         }
