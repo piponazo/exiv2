@@ -46,6 +46,9 @@ add_library( exiv2lib
     ../include/exiv2/slice.hpp
     asfvideo.cpp            ../include/exiv2/asfvideo.hpp
     basicio.cpp             ../include/exiv2/basicio.hpp
+    FileIo.cpp              ../include/exiv2/FileIo.hpp
+    MemIo.cpp               ../include/exiv2/MemIo.hpp
+    RemoteIo.cpp            ../include/exiv2/RemoteIo.hpp
     bigtiffimage.cpp
     bmpimage.cpp            ../include/exiv2/bmpimage.hpp
     convert.cpp             ../include/exiv2/convert.hpp
@@ -56,7 +59,6 @@ add_library( exiv2lib
     epsimage.cpp            ../include/exiv2/epsimage.hpp
     error.cpp               ../include/exiv2/error.hpp
     exif.cpp                ../include/exiv2/exif.hpp
-    FileIo.cpp              ../include/exiv2/FileIo.hpp
     futils.cpp              ../include/exiv2/futils.hpp
     gifimage.cpp            ../include/exiv2/gifimage.hpp
     http.cpp                ../include/exiv2/http.hpp
@@ -66,7 +68,6 @@ add_library( exiv2lib
     jp2image.cpp            ../include/exiv2/jp2image.hpp
     jpgimage.cpp            ../include/exiv2/jpgimage.hpp
     matroskavideo.cpp       ../include/exiv2/matroskavideo.hpp
-    MemIo.cpp               ../include/exiv2/MemIo.hpp
     metadatum.cpp           ../include/exiv2/metadatum.hpp
     mrwimage.cpp            ../include/exiv2/mrwimage.hpp
     orfimage.cpp            ../include/exiv2/orfimage.hpp

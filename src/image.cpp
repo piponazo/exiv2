@@ -32,6 +32,7 @@
 #include "slice.hpp"
 
 #include "MemIo.hpp"
+#include "RemoteIo.hpp"
 #include "cr2image.hpp"
 #include "crwimage.hpp"
 #include "epsimage.hpp"
