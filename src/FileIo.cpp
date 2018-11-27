@@ -29,6 +29,18 @@
 # include <sys/mman.h>                  // for mmap and munmap
 #endif
 
+// Platform specific headers for handling extended attributes (xattr)
+#if defined(__APPLE__)
+# include <sys/xattr.h>
+#endif
+
+#if defined(__MINGW__) || (defined(WIN32) && !defined(__CYGWIN))
+// Windows doesn't provide nlink_t
+typedef short nlink_t;
+# include <windows.h>
+# include <io.h>
+#endif
+
 namespace Exiv2 {
     //! Internal Pimpl structure of class FileIo.
     class FileIo::Impl {
