@@ -27,6 +27,7 @@
 // *****************************************************************************
 // included header files
 #include <exiv2/exiv2.hpp>
+#include <exiv2/MemIo.hpp>
 
 #include <cstdio>                               // for EOF
 #include <cstring>

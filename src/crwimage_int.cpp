@@ -5,6 +5,7 @@
 #include "unused.h"
 
 #include <cassert>
+#include <ctime>
 
 // *****************************************************************************
 // local declarations

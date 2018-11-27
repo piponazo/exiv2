@@ -28,14 +28,16 @@
 #include "config.h"
 
 #ifdef EXV_ENABLE_VIDEO
-#include "riffvideo.hpp"
-#include "futils.hpp"
 #include "basicio.hpp"
+#include "futils.hpp"
+#include "image_int.hpp"
+#include "MemIo.hpp"
+#include "riffvideo.hpp"
 #include "tags.hpp"
 #include "tags_int.hpp"
-#include "types.hpp"
 #include "tiffimage_int.hpp"
-#include "image_int.hpp"
+#include "types.hpp"
+
 // + standard includes
 #include <cmath>
 

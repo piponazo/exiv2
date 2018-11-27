@@ -38,6 +38,7 @@
 #include "preview.hpp"
 #include "futils.hpp"
 #include "i18n.h"                // NLS support.
+#include "MemIo.hpp"
 
 // + standard includes
 #include <string>
