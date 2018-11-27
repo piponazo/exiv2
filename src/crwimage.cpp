@@ -31,6 +31,7 @@
 #include "crwimage_int.hpp"
 #include "error.hpp"
 #include "futils.hpp"
+#include "MemIo.hpp"
 #include "value.hpp"
 #include "tags.hpp"
 #include "tags_int.hpp"

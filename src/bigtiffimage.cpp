@@ -9,6 +9,7 @@
 #include "error.hpp"
 #include "image_int.hpp"
 #include "enforce.hpp"
+#include "MemIo.hpp"
 
 
 namespace Exiv2

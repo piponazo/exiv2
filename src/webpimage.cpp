@@ -40,6 +40,7 @@
 #include "tiffimage.hpp"
 #include "tiffimage_int.hpp"
 #include "convert.hpp"
+#include "MemIo.hpp"
 
 #include <cmath>
 #include <iomanip>

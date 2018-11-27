@@ -31,14 +31,17 @@
 #include "safe_op.hpp"
 #include "slice.hpp"
 
+#include "MemIo.hpp"
 #include "cr2image.hpp"
 #include "crwimage.hpp"
 #include "epsimage.hpp"
 #include "jpgimage.hpp"
 #include "mrwimage.hpp"
+
 #ifdef EXV_HAVE_LIBZ
 # include "pngimage.hpp"
 #endif // EXV_HAVE_LIBZ
+
 #include "rafimage.hpp"
 #include "tiffimage.hpp"
 #include "tiffimage_int.hpp"
@@ -60,6 +63,7 @@
 #include "riffvideo.hpp"
 #include "asfvideo.hpp"
 #endif // EXV_ENABLE_VIDEO
+
 #include "rw2image.hpp"
 #include "pgfimage.hpp"
 #include "xmpsidecar.hpp"
@@ -957,7 +961,9 @@ namespace Exiv2 {
     {
         BasicIo::AutoPtr io(new MemIo);
         Image::AutoPtr image = create(type, io);
-        if (image.get() == 0) throw Error(kerUnsupportedImageType, type);
+        if (image.get() == 0) {
+            throw Error(kerUnsupportedImageType, type);
+        }
         return image;
     }
 

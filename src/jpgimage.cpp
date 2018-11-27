@@ -31,6 +31,7 @@
 #include "futils.hpp"
 #include "helper_functions.hpp"
 #include "enforce.hpp"
+#include "MemIo.hpp"
 
 #ifdef WIN32
 #include <windows.h>

@@ -37,6 +37,7 @@
 #include "futils.hpp"
 #include "types.hpp"
 #include "safe_op.hpp"
+#include "MemIo.hpp"
 
 // + standard includes
 #include <string>

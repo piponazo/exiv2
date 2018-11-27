@@ -39,7 +39,7 @@ add_library( exiv2lib_int OBJECT
     unused.h
 )
 
-add_library( exiv2lib 
+add_library( exiv2lib
     ../include/exiv2/config.h
     ../include/exiv2/exiv2.hpp
     ../include/exiv2/rwlock.hpp
@@ -65,6 +65,7 @@ add_library( exiv2lib
     jp2image.cpp            ../include/exiv2/jp2image.hpp
     jpgimage.cpp            ../include/exiv2/jpgimage.hpp
     matroskavideo.cpp       ../include/exiv2/matroskavideo.hpp
+    MemIo.cpp               ../include/exiv2/MemIo.hpp
     metadatum.cpp           ../include/exiv2/metadatum.hpp
     mrwimage.cpp            ../include/exiv2/mrwimage.hpp
     orfimage.cpp            ../include/exiv2/orfimage.hpp
@@ -219,7 +220,7 @@ install(TARGETS exiv2lib EXPORT exiv2Config
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(DIRECTORY ../include/exiv2 
+install(DIRECTORY ../include/exiv2
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h*")
 
@@ -234,7 +235,7 @@ install(EXPORT exiv2Config DESTINATION "share/exiv2/cmake")
 # exiv2 application
 
 if(EXIV2_BUILD_EXIV2_COMMAND)
-    add_executable( exiv2 
+    add_executable( exiv2
          exiv2.cpp
          exiv2app.hpp
          actions.cpp actions.hpp
@@ -259,7 +260,7 @@ if(EXIV2_BUILD_EXIV2_COMMAND)
         # the 3rd party dependencies in the conanDlls folder.
 
         # Copy 3rd party DLLs the bin folder. [build step]
-        add_custom_command(TARGET exiv2 POST_BUILD
+        add_custom_command(TARGET exiv2lib POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_BINARY_DIR}/conanDlls ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
         # Copy 3rd party DLLs the bin folder. [install step]

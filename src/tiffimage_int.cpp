@@ -3,6 +3,7 @@
 #include "makernote_int.hpp"
 #include "tiffvisitor_int.hpp"
 #include "i18n.h"                // NLS support.
+#include "MemIo.hpp"
 
 // Shortcuts for the newTiffBinaryArray templates.
 #define EXV_BINARY_ARRAY(arrayCfg, arrayDef) (newTiffBinaryArray0<&arrayCfg, EXV_COUNTOF(arrayDef), arrayDef>)

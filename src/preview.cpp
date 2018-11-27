@@ -33,6 +33,7 @@
 #include "futils.hpp"
 #include "enforce.hpp"
 #include "safe_op.hpp"
+#include "MemIo.hpp"
 
 #include "image.hpp"
 #include "cr2image.hpp"

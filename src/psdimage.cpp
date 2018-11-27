@@ -30,6 +30,7 @@
 #include "psdimage.hpp"
 #include "jpgimage.hpp"
 #include "image.hpp"
+#include "MemIo.hpp"
 #include "basicio.hpp"
 #include "error.hpp"
 #include "futils.hpp"

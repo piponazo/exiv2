@@ -33,6 +33,7 @@
 #include "basicio.hpp"
 #include "error.hpp"
 #include "futils.hpp"
+#include "MemIo.hpp"
 
 // + standard includes
 #include <cstdio>                               // for EOF

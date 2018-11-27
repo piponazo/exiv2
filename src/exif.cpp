@@ -29,6 +29,7 @@
 
 #include "exif.hpp"
 #include "metadatum.hpp"
+#include "MemIo.hpp"
 #include "tags.hpp"
 #include "tags_int.hpp"
 #include "value.hpp"

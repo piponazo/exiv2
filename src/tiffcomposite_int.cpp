@@ -30,6 +30,7 @@
 #include "tiffcomposite_int.hpp"
 #include "tiffvisitor_int.hpp"
 #include "makernote_int.hpp"
+#include "MemIo.hpp"
 #include "value.hpp"
 #include "error.hpp"
 #include "enforce.hpp"

@@ -35,6 +35,7 @@
 #include "error.hpp"
 #include "futils.hpp"
 #include "types.hpp"
+#include "MemIo.hpp"
 
 // + standard includes
 #include <string>
