@@ -15,6 +15,7 @@ add_executable(unit_tests mainTestRunner.cpp
     test_slice.cpp
     test_image_int.cpp
     test_PsdImage.cpp
+    test_MemIO.cpp
     $<TARGET_OBJECTS:exiv2lib_int>
 )
 
@@ -39,6 +40,7 @@ target_include_directories(unit_tests
 target_compile_definitions(unit_tests
     PRIVATE
         GTEST_LINKED_AS_SHARED_LIBRARY=1
+        TEST_DATA_DIR="${CMAKE_SOURCE_DIR}/test/data/"
 )
 
 set_target_properties( unit_tests PROPERTIES
