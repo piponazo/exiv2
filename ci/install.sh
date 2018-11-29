@@ -12,6 +12,7 @@ if [[ "$(uname -s)" == 'Linux' ]]; then
     virtualenv conan
     source conan/bin/activate
 else
+    brew update
     brew install md5sha1sum pyenv-virtualenv
     export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS"
     export LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"

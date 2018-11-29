@@ -30,8 +30,12 @@ matrix:
 install: ./ci/install.sh
 script:  ./ci/run.sh
 
+before_cache:
+  - brew cleanup
+
 cache:
     ccache: true
     directories:
     - conan         # Conan installation folder
     - $HOME/conanData     # Conan storage location
+    - $HOME/Library/Caches/Homebrew # Cache downloaded bottles
