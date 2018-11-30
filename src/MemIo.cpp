@@ -22,96 +22,64 @@
 #include "error.hpp"
 
 // + standard includes
-#include <string>
-#include <ctime>
-#include <memory>
-#include <iostream>
-#include <cstring>
 #include <cassert>
-#include <cstdio>                       // for remove, rename
-#include <cstdlib>                      // for alloc, realloc, free
-#include <sys/types.h>                  // for stat, chmod
-#include <sys/stat.h>                   // for stat, chmod
+#include <cstdio>   // for remove, rename
+#include <cstdlib>  // for alloc, realloc, free
+#include <cstring>
+#include <ctime>
+#include <iostream>
 
-#ifdef EXV_HAVE_SYS_MMAN_H
-# include <sys/mman.h>                  // for mmap and munmap
-#endif
-#ifdef EXV_HAVE_PROCESS_H
-# include <process.h>
-#endif
 #ifdef EXV_HAVE_UNISTD_H
-# include <unistd.h>                    // for getpid, stat
+#include <unistd.h>  // for isatty
 #endif
 
-// Platform specific headers for handling extended attributes (xattr)
-#if defined(__APPLE__)
-# include <sys/xattr.h>
-#endif
-
-#if defined(__MINGW__) || (defined(WIN32) && !defined(__CYGWIN))
-// Windows doesn't provide nlink_t
-typedef short nlink_t;
-# include <windows.h>
-# include <io.h>
-#endif
-
-namespace Exiv2 {
-
+namespace Exiv2
+{
     //! Internal Pimpl structure of class MemIo.
-    class MemIo::Impl {
+    class MemIo::Impl
+    {
     public:
-        Impl();                            //!< Default constructor
-        Impl(const byte* data, long size); //!< Constructor 2
+        Impl();                             //!< Default constructor
+        Impl(const byte* data, long size);  //!< Constructor 2
 
         // DATA
-        byte* data_;                       //!< Pointer to the start of the memory area
-        size_t idx_;                       //!< Index into the memory area
-        size_t size_;                      //!< Size of the memory area
-        size_t sizeAlloced_;               //!< Size of the allocated buffer
-        bool isMalloced_;                  //!< Was the buffer allocated?
-        bool eof_;                         //!< EOF indicator
+        byte* data_;          //!< Pointer to the start of the memory area
+        size_t idx_;          //!< Index into the memory area
+        size_t size_;         //!< Size of the memory area
+        size_t sizeAlloced_;  //!< Size of the allocated buffer
+        bool isMalloced_;     //!< Was the buffer allocated?
+        bool eof_;            //!< EOF indicator
 
         // METHODS
-        void reserve(size_t wcount);         //!< Reserve memory
+        void reserve(size_t wcount);  //!< Reserve memory
 
     private:
         // NOT IMPLEMENTED
         Impl(const Impl& rhs);             //!< Copy constructor
         Impl& operator=(const Impl& rhs);  //!< Assignment
 
-    }; // class MemIo::Impl
+    };  // class MemIo::Impl
 
-    MemIo::Impl::Impl()
-        : data_(0),
-          idx_(0),
-          size_(0),
-          sizeAlloced_(0),
-          isMalloced_(false),
-          eof_(false)
+    MemIo::Impl::Impl() : data_(0), idx_(0), size_(0), sizeAlloced_(0), isMalloced_(false), eof_(false)
     {
     }
 
     MemIo::Impl::Impl(const byte* data, long size)
-        : data_(const_cast<byte*>(data)),
-          idx_(0),
-          size_(size),
-          sizeAlloced_(0),
-          isMalloced_(false),
-          eof_(false)
+        : data_(const_cast<byte*>(data)), idx_(0), size_(size), sizeAlloced_(0), isMalloced_(false), eof_(false)
     {
     }
 
     void MemIo::Impl::reserve(size_t wcount)
     {
         const size_t need = wcount + idx_;
-        size_t blockSize = 32*1024;   // 32768
-        const size_t maxBlockSize = 4*1024*1024;
+        size_t blockSize = 32 * 1024;  // 32768
+        const size_t maxBlockSize = 4 * 1024 * 1024;
 
         if (!isMalloced_) {
             // Minimum size for 1st block
-            size_t size  = EXV_MAX(blockSize * (1 + need / blockSize), size_);
-            byte* data = static_cast<byte*>(std::malloc(size)); /// \todo use new/delete instead??
-            if (  data == NULL ) {
+            size_t size = EXV_MAX(blockSize * (1 + need / blockSize), size_);
+            byte* data = static_cast<byte*>(std::malloc(size));  /// \todo use new/delete instead??
+            if (data == NULL) {
                 throw Error(kerMallocFailed);
             }
             if (data_ != NULL) {
@@ -124,12 +92,13 @@ namespace Exiv2 {
 
         if (need > size_) {
             if (need > sizeAlloced_) {
-                blockSize = 2*sizeAlloced_ ;
-                if ( blockSize > maxBlockSize ) blockSize = maxBlockSize ;
+                blockSize = 2 * sizeAlloced_;
+                if (blockSize > maxBlockSize)
+                    blockSize = maxBlockSize;
                 // Allocate in blocks
-                size_t want  = blockSize * (1 + need / blockSize );
+                size_t want = blockSize * (1 + need / blockSize);
                 data_ = static_cast<byte*>(std::realloc(data_, want));
-                if ( data_ == NULL ) {
+                if (data_ == NULL) {
                     throw Error(kerMallocFailed);
                 }
                 sizeAlloced_ = want;
@@ -139,13 +108,11 @@ namespace Exiv2 {
         }
     }
 
-    MemIo::MemIo()
-        : p_(new Impl())
+    MemIo::MemIo() : p_(new Impl())
     {
     }
 
-    MemIo::MemIo(const byte* data, long size)
-        : p_(new Impl(data, size))
+    MemIo::MemIo(const byte* data, long size) : p_(new Impl(data, size))
     {
     }
 
@@ -170,7 +137,7 @@ namespace Exiv2 {
 
     void MemIo::transfer(BasicIo& src)
     {
-        MemIo *memIo = dynamic_cast<MemIo*>(&src);
+        MemIo* memIo = dynamic_cast<MemIo*>(&src);
         if (memIo) {
             // Optimization if src is another instance of MemIo
             if (p_->isMalloced_) {
@@ -184,8 +151,7 @@ namespace Exiv2 {
             memIo->p_->data_ = 0;
             memIo->p_->size_ = 0;
             memIo->p_->isMalloced_ = false;
-        }
-        else {
+        } else {
             // Generic reopen to reset position to start
             if (src.open() != 0) {
                 throw Error(kerDataSourceOpenFailed, src.path(), strError());
@@ -194,13 +160,16 @@ namespace Exiv2 {
             write(src);
             src.close();
         }
-        if (error() || src.error()) throw Error(kerMemoryTransferFailed, strError());
+        if (error() || src.error())
+            throw Error(kerMemoryTransferFailed, strError());
     }
 
     long MemIo::write(BasicIo& src)
     {
-        if (static_cast<BasicIo*>(this) == &src) return 0;
-        if (!src.isopen()) return 0;
+        if (static_cast<BasicIo*>(this) == &src)
+            return 0;
+        if (!src.isopen())
+            return 0;
 
         byte buf[4096];
         long readCount = 0;
@@ -222,17 +191,24 @@ namespace Exiv2 {
     }
 
 #if defined(_MSC_VER)
-    int MemIo::seek( int64_t offset, Position pos )
+    int MemIo::seek(int64_t offset, Position pos)
     {
         uint64_t newIdx = 0;
 
         switch (pos) {
-        case BasicIo::cur: newIdx = p_->idx_ + offset; break;
-        case BasicIo::beg: newIdx = offset; break;
-        case BasicIo::end: newIdx = p_->size_ + offset; break;
+            case BasicIo::cur:
+                newIdx = p_->idx_ + offset;
+                break;
+            case BasicIo::beg:
+                newIdx = offset;
+                break;
+            case BasicIo::end:
+                newIdx = p_->size_ + offset;
+                break;
         }
 
-        p_->idx_ = static_cast<long>(newIdx);   //not very sure about this. need more test!!    - note by Shawn  fly2xj@gmail.com //TODO
+        p_->idx_ = static_cast<long>(
+            newIdx);  // not very sure about this. need more test!!    - note by Shawn  fly2xj@gmail.com //TODO
         p_->eof_ = false;
         return 0;
     }
@@ -242,12 +218,19 @@ namespace Exiv2 {
         long newIdx = 0;
 
         switch (pos) {
-        case BasicIo::cur: newIdx = p_->idx_ + offset; break;
-        case BasicIo::beg: newIdx = offset; break;
-        case BasicIo::end: newIdx = p_->size_ + offset; break;
+            case BasicIo::cur:
+                newIdx = p_->idx_ + offset;
+                break;
+            case BasicIo::beg:
+                newIdx = offset;
+                break;
+            case BasicIo::end:
+                newIdx = p_->size_ + offset;
+                break;
         }
 
-        if (newIdx < 0) return 1;
+        if (newIdx < 0)
+            return 1;
         p_->idx_ = newIdx;
         p_->eof_ = false;
         return 0;
@@ -341,28 +324,35 @@ namespace Exiv2 {
     }
 
 #endif
-    void MemIo::populateFakeData() {
-
+    void MemIo::populateFakeData()
+    {
     }
 
 #if EXV_XPATH_MEMIO
-    XPathIo::XPathIo(const std::string& path) {
+    XPathIo::XPathIo(const std::string& path)
+    {
         Protocol prot = fileProtocol(path);
 
-        if (prot == pStdin)         ReadStdin();
-        else if (prot == pDataUri)  ReadDataUri(path);
+        if (prot == pStdin)
+            ReadStdin();
+        else if (prot == pDataUri)
+            ReadDataUri(path);
     }
 #ifdef EXV_UNICODE_PATH
-    XPathIo::XPathIo(const std::wstring& wpath) {
+    XPathIo::XPathIo(const std::wstring& wpath)
+    {
         std::string path;
         path.assign(wpath.begin(), wpath.end());
         Protocol prot = fileProtocol(path);
-        if (prot == pStdin)         ReadStdin();
-        else if (prot == pDataUri)  ReadDataUri(path);
+        if (prot == pStdin)
+            ReadStdin();
+        else if (prot == pDataUri)
+            ReadDataUri(path);
     }
 #endif
 
-    void XPathIo::ReadStdin() {
+    void XPathIo::ReadStdin()
+    {
         if (isatty(fileno(stdin)))
             throw Error(kerInvalidIccProfile);
 
@@ -372,7 +362,7 @@ namespace Exiv2 {
             throw Error(kerInvalidXMP);
 #endif
 
-        char readBuf[100*1024];
+        char readBuf[100 * 1024];
         std::streamsize readBufSize = 0;
         do {
             std::cin.read(readBuf, sizeof(readBuf));
@@ -380,15 +370,16 @@ namespace Exiv2 {
             if (readBufSize > 0) {
                 write((byte*)readBuf, (long)readBufSize);
             }
-        } while(readBufSize);
+        } while (readBufSize);
     }
 
-    void XPathIo::ReadDataUri(const std::string& path) {
+    void XPathIo::ReadDataUri(const std::string& path)
+    {
         size_t base64Pos = path.find("base64,");
         if (base64Pos == std::string::npos)
             throw Error(kerErrorMessage, "No base64 data");
 
-        std::string data = path.substr(base64Pos+7);
+        std::string data = path.substr(base64Pos + 7);
         char* decodeData = new char[data.length()];
         long size = base64decode(data.c_str(), decodeData, data.length());
         if (size > 0)
@@ -400,28 +391,32 @@ namespace Exiv2 {
 
 #else
     const std::string XPathIo::TEMP_FILE_EXT = ".exiv2_temp";
-    const std::string XPathIo::GEN_FILE_EXT  = ".exiv2";
+    const std::string XPathIo::GEN_FILE_EXT = ".exiv2";
 
-    XPathIo::XPathIo(const std::string& orgPath) : FileIo(XPathIo::writeDataToFile(orgPath)) {
+    XPathIo::XPathIo(const std::string& orgPath) : FileIo(XPathIo::writeDataToFile(orgPath))
+    {
         isTemp_ = true;
         tempFilePath_ = path();
     }
 
 #ifdef EXV_UNICODE_PATH
-    XPathIo::XPathIo(const std::wstring& wOrgPathpath) : FileIo(XPathIo::writeDataToFile(wOrgPathpath)) {
+    XPathIo::XPathIo(const std::wstring& wOrgPathpath) : FileIo(XPathIo::writeDataToFile(wOrgPathpath))
+    {
         isTemp_ = true;
         tempFilePath_ = path();
     }
 #endif
 
-    XPathIo::~XPathIo() {
+    XPathIo::~XPathIo()
+    {
         if (isTemp_ && remove(tempFilePath_.c_str()) != 0) {
             // error when removing file
             // printf ("Warning: Unable to remove the temp file %s.\n", tempFilePath_.c_str());
         }
     }
 
-    void XPathIo::transfer(BasicIo& src) {
+    void XPathIo::transfer(BasicIo& src)
+    {
         if (isTemp_) {
             // replace temp path to gent path.
             std::string currentPath = path();
@@ -437,7 +432,8 @@ namespace Exiv2 {
         }
     }
 
-    std::string XPathIo::writeDataToFile(const std::string& orgPath) {
+    std::string XPathIo::writeDataToFile(const std::string& orgPath)
+    {
         Protocol prot = fileProtocol(orgPath);
 
         // generating the name for temp file.
@@ -456,22 +452,22 @@ namespace Exiv2 {
                 throw Error(kerInvalidXMP);
 #endif
             // read stdin and write to the temp file.
-            char readBuf[100*1024];
+            char readBuf[100 * 1024];
             std::streamsize readBufSize = 0;
             do {
                 std::cin.read(readBuf, sizeof(readBuf));
                 readBufSize = std::cin.gcount();
                 if (readBufSize > 0) {
-                    fs.write (readBuf, readBufSize);
+                    fs.write(readBuf, readBufSize);
                 }
-            } while(readBufSize);
+            } while (readBufSize);
         } else if (prot == pDataUri) {
             // read data uri and write to the temp file.
             size_t base64Pos = orgPath.find("base64,");
             if (base64Pos == std::string::npos)
                 throw Error(kerErrorMessage, "No base64 data");
 
-            std::string data = orgPath.substr(base64Pos+7);
+            std::string data = orgPath.substr(base64Pos + 7);
             char* decodeData = new char[data.length()];
             long size = base64decode(data.c_str(), decodeData, data.length());
             if (size > 0)
@@ -486,7 +482,8 @@ namespace Exiv2 {
     }
 
 #ifdef EXV_UNICODE_PATH
-    std::string XPathIo::writeDataToFile(const std::wstring& wOrgPath) {
+    std::string XPathIo::writeDataToFile(const std::wstring& wOrgPath)
+    {
         std::string orgPath;
         orgPath.assign(wOrgPath.begin(), wOrgPath.end());
         return XPathIo::writeDataToFile(orgPath);
@@ -494,4 +491,4 @@ namespace Exiv2 {
 #endif
 
 #endif
-}
+}  // namespace Exiv2
