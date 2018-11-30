@@ -64,11 +64,13 @@ namespace Exiv2 {
           @return 0
          */
         virtual int open();
+
         /*!
           @brief Does nothing on MemIo objects.
           @return 0
          */
         virtual int close();
+
         /*!
           @brief Write data to the memory block. If needed, the size of the
               internal memory block is expanded. The IO position is advanced
@@ -80,6 +82,7 @@ namespace Exiv2 {
                  0 if failure;
          */
         virtual long write(const byte* data, long wcount);
+
         /*!
           @brief Write data that is read from another BasicIo instance to
               the memory block. If needed, the size of the internal memory
@@ -91,6 +94,7 @@ namespace Exiv2 {
                  0 if failure;
          */
         virtual long write(BasicIo& src);
+
         /*!
           @brief Write one byte to the memory block. The IO position is
               advanced by one byte.
@@ -99,6 +103,7 @@ namespace Exiv2 {
                  EOF if failure;
          */
         virtual int putb(byte data);
+
         /*!
           @brief Read data from the memory block. Reading starts at the current
               IO position and the position is advanced by the number of
@@ -110,6 +115,7 @@ namespace Exiv2 {
                 DataBuf::size_ will be 0 on failure.
          */
         virtual DataBuf read(long rcount);
+
         /*!
           @brief Read data from the memory block. Reading starts at the current
               IO position and the position is advanced by the number of
@@ -123,6 +129,7 @@ namespace Exiv2 {
                  0 if failure;
          */
         virtual long read(byte* buf, long rcount);
+
         /*!
           @brief Read one byte from the memory block. The IO position is
               advanced by one byte.
@@ -130,6 +137,7 @@ namespace Exiv2 {
                  EOF if failure;
          */
         virtual int getb();
+
         /*!
           @brief Clear the memory block and then transfer data from
               the \em src BasicIo object into a new block of memory.
@@ -146,6 +154,7 @@ namespace Exiv2 {
           @throw Error In case of failure
          */
         virtual void transfer(BasicIo& src);
+
         /*!
           @brief Move the current IO position.
           @param offset Number of bytes to move the IO position
@@ -168,6 +177,7 @@ namespace Exiv2 {
                  MemIo object exists.
          */
         virtual byte* mmap(bool /*isWriteable*/ =false);
+
         virtual int munmap();
         //@}
 
@@ -178,20 +188,26 @@ namespace Exiv2 {
           @return Offset from the start of the memory block
          */
         virtual long tell() const;
+
         /*!
           @brief Get the current memory buffer size in bytes.
           @return Size of the in memory data in bytes;<BR>
                  -1 if failure;
          */
         virtual size_t size() const;
+
         //!Always returns true
         virtual bool isopen() const;
+
         //!Always returns 0
         virtual int error() const;
+
         //!Returns true if the IO position has reached the end, otherwise false.
         virtual bool eof() const;
+
         //! Returns a dummy path, indicating that memory access is used
         virtual std::string path() const;
+
 #ifdef EXV_UNICODE_PATH
         /*
           @brief Like path() but returns a unicode dummy path in an std::wstring.
