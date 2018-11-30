@@ -65,14 +65,14 @@ namespace Exiv2 {
 
         // DATA
         byte* data_;                       //!< Pointer to the start of the memory area
-        long idx_;                         //!< Index into the memory area
-        long size_;                        //!< Size of the memory area
-        long sizeAlloced_;                 //!< Size of the allocated buffer
+        size_t idx_;                       //!< Index into the memory area
+        size_t size_;                      //!< Size of the memory area
+        size_t sizeAlloced_;               //!< Size of the allocated buffer
         bool isMalloced_;                  //!< Was the buffer allocated?
         bool eof_;                         //!< EOF indicator
 
         // METHODS
-        void reserve(long wcount);         //!< Reserve memory
+        void reserve(size_t wcount);         //!< Reserve memory
 
     private:
         // NOT IMPLEMENTED
@@ -101,16 +101,16 @@ namespace Exiv2 {
     {
     }
 
-    void MemIo::Impl::reserve(long wcount)
+    void MemIo::Impl::reserve(size_t wcount)
     {
-        const long need = wcount + idx_;
-        long    blockSize =     32*1024;   // 32768           `
-        const long maxBlockSize = 4*1024*1024;
+        const size_t need = wcount + idx_;
+        size_t blockSize = 32*1024;   // 32768
+        const size_t maxBlockSize = 4*1024*1024;
 
         if (!isMalloced_) {
             // Minimum size for 1st block
-            long size  = EXV_MAX(blockSize * (1 + need / blockSize), size_);
-            byte* data = (byte*)std::malloc(size);
+            size_t size  = EXV_MAX(blockSize * (1 + need / blockSize), size_);
+            byte* data = static_cast<byte*>(std::malloc(size)); /// \todo use new/delete instead??
             if (  data == NULL ) {
                 throw Error(kerMallocFailed);
             }
@@ -127,8 +127,8 @@ namespace Exiv2 {
                 blockSize = 2*sizeAlloced_ ;
                 if ( blockSize > maxBlockSize ) blockSize = maxBlockSize ;
                 // Allocate in blocks
-                long want      = blockSize * (1 + need / blockSize );
-                data_ = (byte*)std::realloc(data_, want);
+                size_t want  = blockSize * (1 + need / blockSize );
+                data_ = static_cast<byte*>(std::realloc(data_, want));
                 if ( data_ == NULL ) {
                     throw Error(kerMallocFailed);
                 }
@@ -158,12 +158,13 @@ namespace Exiv2 {
 
     long MemIo::write(const byte* data, long wcount)
     {
-        p_->reserve(wcount);
+        const size_t count = static_cast<size_t>(wcount);
+        p_->reserve(count);
         assert(p_->isMalloced_);
         if (data != NULL) {
-            std::memcpy(&p_->data_[p_->idx_], data, wcount);
+            std::memcpy(&p_->data_[p_->idx_], data, count);
         }
-        p_->idx_ += wcount;
+        p_->idx_ += count;
         return wcount;
     }
 
