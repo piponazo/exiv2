@@ -77,6 +77,10 @@ include(cmake/compilerFlagsExiv2.cmake REQUIRED)
 add_subdirectory( include )
 add_subdirectory( src )
 
+if( EXIV2_BUILD_EXIV2_COMMAND )
+    add_subdirectory( exiv2 )
+endif()
+
 if( EXIV2_BUILD_UNIT_TESTS )
     add_subdirectory ( unitTests )
 endif()

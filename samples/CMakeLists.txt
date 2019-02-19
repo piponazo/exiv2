@@ -54,18 +54,18 @@ if (MSVC)
     link_directories(${CMAKE_INSTALL_PREFIX}/lib)
 endif()
 
-add_executable( getopt-test getopt-test.cpp ../src/utils.cpp ../src/getopt.cpp)
+add_executable( getopt-test getopt-test.cpp ../exiv2/utils.cpp ../exiv2/getopt.cpp)
 list(APPEND APPLICATIONS getopt-test)
-target_include_directories(getopt-test PRIVATE ${CMAKE_SOURCE_DIR}/src) # To find utils.hpp
+target_include_directories(getopt-test PRIVATE ${CMAKE_SOURCE_DIR}/exiv2) # To find utils.hpp
 
-add_executable( metacopy metacopy.cpp ../src/utils.cpp ../src/getopt.cpp)
+add_executable( metacopy metacopy.cpp ../exiv2/utils.cpp ../exiv2/getopt.cpp)
 list(APPEND APPLICATIONS metacopy)
-target_include_directories(metacopy PRIVATE ${CMAKE_SOURCE_DIR}/src) # To find utils.hpp
+target_include_directories(metacopy PRIVATE ${CMAKE_SOURCE_DIR}/exiv2) # To find utils.hpp
 
-add_executable(          pathtest  path-test.cpp ../src/utils.cpp ../src/getopt.cpp)
+add_executable(          pathtest  path-test.cpp ../exiv2/utils.cpp ../exiv2/getopt.cpp)
 list(APPEND APPLICATIONS pathtest)
 set_target_properties(   pathtest  PROPERTIES OUTPUT_NAME path-test )
-target_include_directories(pathtest PRIVATE ${CMAKE_SOURCE_DIR}/src) # To find utils.hpp
+target_include_directories(pathtest PRIVATE ${CMAKE_SOURCE_DIR}/exiv2) # To find utils.hpp
 
 add_executable(          exiv2json exiv2json.cpp Jzon.cpp Jzon.h)
 list(APPEND APPLICATIONS exiv2json)
