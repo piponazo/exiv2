@@ -127,6 +127,7 @@ set_target_properties(exiv2lib_int PROPERTIES
     COMPILE_DEFINITIONS exiv2lib_STATIC
 )
 
+target_link_libraries( exiv2lib PRIVATE Threads::Threads)
 
 target_include_directories(exiv2lib_int PRIVATE ${ZLIB_INCLUDE_DIR})
 target_include_directories(exiv2lib PRIVATE ${ZLIB_INCLUDE_DIR})
@@ -176,8 +177,6 @@ if (NOT MSVC)
     if (CYGWIN OR MINGW OR MSYS)
         target_link_libraries( exiv2lib PRIVATE psapi ws2_32 )
     endif()
-
-    target_link_libraries( exiv2lib PRIVATE Threads::Threads)
 else()
     target_link_libraries( exiv2lib PRIVATE psapi ws2_32)
 endif()
