@@ -74,8 +74,7 @@ endif()
 
 include(cmake/compilerFlagsExiv2.cmake REQUIRED)
 
-add_subdirectory( include )
-add_subdirectory( src )
+add_subdirectory( exiv2lib )
 
 if( EXIV2_BUILD_EXIV2_COMMAND )
     add_subdirectory( exiv2 )

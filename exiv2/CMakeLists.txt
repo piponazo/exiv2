@@ -12,7 +12,7 @@ set_target_properties( exiv2 PROPERTIES
 )
 
 target_link_libraries( exiv2 PRIVATE exiv2lib )
-target_include_directories(exiv2 PRIVATE ${PROJECT_SOURCE_DIR}/src) # To find i18n.h
+target_include_directories(exiv2 PRIVATE ${PROJECT_SOURCE_DIR}/exiv2lib/src) # To find i18n.h
 
 if( EXIV2_ENABLE_NLS )
     target_link_libraries(exiv2 PRIVATE ${Intl_LIBRARIES})

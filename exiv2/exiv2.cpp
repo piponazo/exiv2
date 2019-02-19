@@ -30,13 +30,13 @@
 
 // include local header files which are not part of libexiv2
 #include "actions.hpp"
-#include "convert.hpp"
+#include <exiv2/convert.hpp>
 #include "exiv2app.hpp"
-#include "futils.hpp"
+#include <exiv2/futils.hpp>
 #include "getopt.hpp"
 #include "i18n.h"  // NLS support.
 #include "utils.hpp"
-#include "xmp_exiv2.hpp"
+#include <exiv2/xmp_exiv2.hpp>
 
 #include <iostream>
 #include <fstream>

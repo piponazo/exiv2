@@ -32,7 +32,7 @@
 #include <exiv2/exiv2.hpp>
 
 #include "utils.hpp"
-#include "types.hpp"
+#include <exiv2/types.hpp>
 #include "getopt.hpp"
 
 // + standard includes

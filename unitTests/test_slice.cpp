@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#include "slice.hpp"
-#include "types.hpp"
+#include <exiv2/slice.hpp>
+#include <exiv2/types.hpp>
 
 #include "gtestwrapper.h"
 

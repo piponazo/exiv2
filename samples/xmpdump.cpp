@@ -6,8 +6,8 @@
 #include <iostream>
 #include <string>
 
-#include "error.hpp"
-#include "image.hpp"
+#include <exiv2/error.hpp>
+#include <exiv2/image.hpp>
 
 int main(int argc, char* const argv[])
 {

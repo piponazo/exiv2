@@ -17,7 +17,6 @@ add_executable(unit_tests mainTestRunner.cpp
     $<TARGET_OBJECTS:exiv2lib_int>
 )
 
-#TODO Use GTest::GTest once we upgrade the minimum CMake version required
 target_link_libraries(unit_tests
     PRIVATE
         exiv2lib
@@ -29,10 +28,7 @@ if( EXIV2_ENABLE_PNG )
     target_link_libraries(unit_tests PRIVATE ${ZLIB_LIBRARIES} )
 endif()
 
-target_include_directories(unit_tests
-    PRIVATE
-        ${CMAKE_SOURCE_DIR}/src
-)
+target_include_directories(unit_tests PRIVATE ${CMAKE_SOURCE_DIR}/exiv2lib/src)
 
 set_target_properties(unit_tests PROPERTIES
     COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS}

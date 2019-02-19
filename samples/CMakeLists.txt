@@ -41,7 +41,7 @@ foreach(entry ${SAMPLES})
       COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
     list(APPEND APPLICATIONS ${target})
     add_test( ${target}_test ${target} )
-    target_include_directories(${target} PRIVATE ${CMAKE_SOURCE_DIR}/src) # To find unused.h
+    target_include_directories(${target} PRIVATE ${CMAKE_SOURCE_DIR}/exiv2lib/src) # To find unused.h
     install( TARGETS ${target} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
     if (MSVC)
         set_target_properties(${target} PROPERTIES LINK_FLAGS "/ignore:4099")
@@ -86,7 +86,7 @@ if( EXPAT_FOUND )
             ${EXPAT_LIBRARIES}
     )
     target_include_directories(geotag PRIVATE ${EXPAT_INCLUDE_DIR})
-    target_include_directories(geotag PRIVATE ${CMAKE_SOURCE_DIR}/src) # To find unused.h
+    target_include_directories(geotag PRIVATE ${CMAKE_SOURCE_DIR}/exiv2lib/src) # To find unused.h
 
     if (WIN32)
         target_compile_definitions(geotag PRIVATE XML_STATIC)

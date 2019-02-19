@@ -22,21 +22,21 @@
  */
 // *****************************************************************************
 // included header files
-#include "config.h"
+#include <exiv2/config.h>
 
 #include "actions.hpp"
 #include "exiv2app.hpp"
-#include "image.hpp"
-#include "jpgimage.hpp"
-#include "xmpsidecar.hpp"
+#include <exiv2/image.hpp>
+#include <exiv2/jpgimage.hpp>
+#include <exiv2/xmpsidecar.hpp>
 #include "utils.hpp"
-#include "types.hpp"
-#include "exif.hpp"
-#include "easyaccess.hpp"
-#include "iptc.hpp"
-#include "xmp_exiv2.hpp"
-#include "preview.hpp"
-#include "futils.hpp"
+#include <exiv2/types.hpp>
+#include <exiv2/exif.hpp>
+#include <exiv2/easyaccess.hpp>
+#include <exiv2/iptc.hpp>
+#include <exiv2/xmp_exiv2.hpp>
+#include <exiv2/preview.hpp>
+#include <exiv2/futils.hpp>
 #include "i18n.h"                // NLS support.
 
 // + standard includes
