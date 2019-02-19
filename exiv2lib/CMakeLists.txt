@@ -143,11 +143,13 @@ endif()
 # Use include/exiv2 to build libary code
 target_include_directories(exiv2lib PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/exiv2lib/include>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}> # To find the generated file exv_conf.h
     $<INSTALL_INTERFACE:include>
 )
 
 target_include_directories(exiv2lib_int PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/exiv2lib/include>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}> # To find the generated file exv_conf.h
 )
 
 if (EXIV2_ENABLE_WEBREADY)
