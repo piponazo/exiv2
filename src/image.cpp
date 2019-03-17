@@ -64,6 +64,7 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
+#include <map>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -81,12 +82,6 @@ namespace {
 
     //! Struct for storing image types and function pointers.
     struct Registry {
-        //! Comparison operator to compare a Registry structure with an image type
-        bool operator==(const ImageType& imageType) const
-        { return imageType == imageType_; }
-
-        // DATA
-        ImageType      imageType_;
         NewInstanceFct newInstance_;
         IsThisTypeFct  isThisType_;
         AccessMode     exifSupport_;
@@ -95,39 +90,34 @@ namespace {
         AccessMode     commentSupport_;
     };
 
-    /// \todo Use std::unordered_map for implementing the registry. Avoid to use ImageType::none
-    const Registry registry[] = {
-        //image type       creation fct     type check  Exif mode    IPTC mode    XMP mode     Comment mode
-        //---------------  ---------------  ----------  -----------  -----------  -----------  ------------
-        { ImageType::jpeg, newJpegInstance, isJpegType, amReadWrite, amReadWrite, amReadWrite, amReadWrite },
-        { ImageType::exv,  newExvInstance,  isExvType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite },
-        { ImageType::cr2,  newCr2Instance,  isCr2Type,  amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::crw,  newCrwInstance,  isCrwType,  amReadWrite, amNone,      amNone,      amReadWrite },
-        { ImageType::mrw,  newMrwInstance,  isMrwType,  amRead,      amRead,      amRead,      amNone      },
-        { ImageType::tiff, newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::bigtiff, newBigTiffInstance, isBigTiffType, amRead, amRead,  amRead,      amNone      },
-        { ImageType::webp, newWebPInstance, isWebPType, amReadWrite, amNone,      amReadWrite, amNone      },
-        { ImageType::dng,  newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::nef,  newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::pef,  newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::arw,  newTiffInstance, isTiffType, amRead,      amRead,      amRead,      amNone      },
-        { ImageType::rw2,  newRw2Instance,  isRw2Type,  amRead,      amRead,      amRead,      amNone      },
-        { ImageType::sr2,  newTiffInstance, isTiffType, amRead,      amRead,      amRead,      amNone      },
-        { ImageType::srw,  newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::orf,  newOrfInstance,  isOrfType,  amReadWrite, amReadWrite, amReadWrite, amNone      },
+    const std::map<ImageType, Registry> IMAGE_REGISTRY = {
+        {ImageType::jpeg, {newJpegInstance, isJpegType, amReadWrite, amReadWrite, amReadWrite, amReadWrite }},
+        {ImageType::exv,  {newExvInstance,  isExvType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite }},
+        {ImageType::cr2,  {newCr2Instance,  isCr2Type,  amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::crw,  {newCrwInstance,  isCrwType,  amReadWrite, amNone,      amNone,      amReadWrite }},
+        {ImageType::mrw,  {newMrwInstance,  isMrwType,  amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::tiff, {newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::bigtiff, {newBigTiffInstance, isBigTiffType, amRead, amRead,  amRead,      amNone      }},
+        {ImageType::webp, {newWebPInstance, isWebPType, amReadWrite, amNone,      amReadWrite, amNone      }},
+        {ImageType::dng,  {newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::nef,  {newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::pef,  {newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::arw,  {newTiffInstance, isTiffType, amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::rw2,  {newRw2Instance,  isRw2Type,  amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::sr2,  {newTiffInstance, isTiffType, amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::srw,  {newTiffInstance, isTiffType, amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::orf,  {newOrfInstance,  isOrfType,  amReadWrite, amReadWrite, amReadWrite, amNone      }},
 #ifdef EXV_HAVE_LIBZ
-        { ImageType::png,  newPngInstance,  isPngType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite },
-#endif // EXV_HAVE_LIBZ
-        { ImageType::pgf,  newPgfInstance,  isPgfType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite },
-        { ImageType::raf,  newRafInstance,  isRafType,  amRead,      amRead,      amRead,      amNone      },
-        { ImageType::xmp,  newXmpInstance,  isXmpType,  amReadWrite, amReadWrite, amReadWrite, amNone      },
-        { ImageType::gif,  newGifInstance,  isGifType,  amNone,      amNone,      amNone,      amNone      },
-        { ImageType::psd,  newPsdInstance,  isPsdType,  amRead,      amRead,      amRead,      amNone      },
-        { ImageType::tga,  newTgaInstance,  isTgaType,  amNone,      amNone,      amNone,      amNone      },
-        { ImageType::bmp,  newBmpInstance,  isBmpType,  amNone,      amNone,      amNone,      amNone      },
-        { ImageType::jp2,  newJp2Instance,  isJp2Type,  amReadWrite, amReadWrite, amReadWrite, amNone      },
-        // End of list marker
-        { ImageType::none, 0,               0,          amNone,      amNone,      amNone,      amNone      }
+        {ImageType::png,  {newPngInstance,  isPngType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite }},
+#endif
+        {ImageType::pgf,  {newPgfInstance,  isPgfType,  amReadWrite, amReadWrite, amReadWrite, amReadWrite }},
+        {ImageType::raf,  {newRafInstance,  isRafType,  amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::xmp,  {newXmpInstance,  isXmpType,  amReadWrite, amReadWrite, amReadWrite, amNone      }},
+        {ImageType::gif,  {newGifInstance,  isGifType,  amNone,      amNone,      amNone,      amNone      }},
+        {ImageType::psd,  {newPsdInstance,  isPsdType,  amRead,      amRead,      amRead,      amNone      }},
+        {ImageType::tga,  {newTgaInstance,  isTgaType,  amNone,      amNone,      amNone,      amNone      }},
+        {ImageType::bmp,  {newBmpInstance,  isBmpType,  amNone,      amNone,      amNone,      amNone      }},
+        {ImageType::jp2,  {newJp2Instance,  isJp2Type,  amReadWrite, amReadWrite, amReadWrite, amNone      }},
     };
 
 }
@@ -761,24 +751,25 @@ namespace Exiv2 {
 
     AccessMode ImageFactory::checkMode(ImageType type, MetadataId metadataId)
     {
-        const Registry* r = find(registry, type);
-        if (!r)
+        auto r = IMAGE_REGISTRY.find(type);
+        if (r == IMAGE_REGISTRY.end())
             throw Error(kerUnsupportedImageType, static_cast<int>(type));
+
         AccessMode am = amNone;
         switch (metadataId) {
         case mdNone:
             break;
         case mdExif:
-            am = r->exifSupport_;
+            am = r->second.exifSupport_;
             break;
         case mdIptc:
-            am = r->iptcSupport_;
+            am = r->second.iptcSupport_;
             break;
         case mdXmp:
-            am = r->xmpSupport_;
+            am = r->second.xmpSupport_;
             break;
         case mdComment:
-            am = r->commentSupport_;
+            am = r->second.commentSupport_;
             break;
         case mdIccProfile: break;
 
@@ -789,10 +780,12 @@ namespace Exiv2 {
 
     bool ImageFactory::checkType(ImageType type, BasicIo& io, bool advance)
     {
-        const Registry* r = find(registry, type);
-        if (0 != r) {
-            return r->isThisType_(io, advance);
+        auto r = IMAGE_REGISTRY.find(type);
+        if (r != IMAGE_REGISTRY.end())
+        {
+            return r->second.isThisType_(io, advance);
         }
+
         return false;
     }
 
@@ -821,9 +814,9 @@ namespace Exiv2 {
         if (io.open() != 0)
             return ImageType::none;
         IoCloser closer(io);
-        for (unsigned int i = 0; registry[i].imageType_ != ImageType::none; ++i) {
-            if (registry[i].isThisType_(io, false)) {
-                return registry[i].imageType_;
+        for (auto image = IMAGE_REGISTRY.cbegin(); image != IMAGE_REGISTRY.cend(); image++) {
+            if (image->second.isThisType_(io, false)) {
+                return image->first;
             }
         }
         return ImageType::none;
@@ -909,9 +902,14 @@ namespace Exiv2 {
         if (io->open() != 0) {
             throw Error(kerDataSourceOpenFailed, io->path(), strError());
         }
-        for (unsigned int i = 0; registry[i].imageType_ != ImageType::none; ++i) {
-            if (registry[i].isThisType_(*io, false)) {
-                return registry[i].newInstance_(std::move(io), false);
+//        for (unsigned int i = 0; registry[i].imageType_ != ImageType::none; ++i) {
+//            if (registry[i].isThisType_(*io, false)) {
+//                return registry[i].newInstance_(std::move(io), false);
+//            }
+//        }
+        for (auto image = IMAGE_REGISTRY.cbegin(); image != IMAGE_REGISTRY.cend(); image++) {
+            if (image->second.isThisType_(*io, false)) {
+                return image->second.newInstance_(std::move(io), false);
             }
         }
         return Image::UniquePtr();
@@ -962,13 +960,13 @@ namespace Exiv2 {
     Image::UniquePtr ImageFactory::create(ImageType type, BasicIo::UniquePtr io)
     {
         // BasicIo instance does not need to be open
-        const Registry* r = find(registry, type);
+        auto r = IMAGE_REGISTRY.find(type);
 
-        if (r == nullptr || type == ImageType::none) {
+        if (r == IMAGE_REGISTRY.end()) {
             return Image::UniquePtr();
         }
 
-        return r->newInstance_(std::move(io), true);
+        return r->second.newInstance_(std::move(io), true);
     }
 
 // *****************************************************************************

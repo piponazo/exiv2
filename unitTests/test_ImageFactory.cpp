@@ -108,8 +108,8 @@ TEST(TheImageFactory, loadInstancesDifferentImageTypes)
     ASSERT_EQ(ImageType::crw, ImageFactory::getType(testData + "/exiv2-canon-powershot-s40.crw"));
     ASSERT_NO_THROW(ImageFactory::open(testData + "/exiv2-canon-powershot-s40.crw", false));
 
-    ASSERT_EQ(ImageType::tiff, ImageFactory::getType(testData + "/exiv2-bug1044.tif"));
-    ASSERT_NO_THROW(ImageFactory::open(testData + "/exiv2-bug1044.tif", false));
+    ASSERT_EQ(ImageType::tiff, ImageFactory::getType(testData + "/Reagan.tiff"));
+    ASSERT_NO_THROW(ImageFactory::open(testData + "/Reagan.tiff", false));
 
     ASSERT_EQ(ImageType::png, ImageFactory::getType(testData + "/exiv2-bug1074.png"));
     ASSERT_NO_THROW(ImageFactory::open(testData + "/exiv2-bug1074.png", false));
@@ -380,16 +380,6 @@ TEST(TheImageFactory, getsExpectedModesForBigTiffImages)
     ASSERT_EQ(amRead, ImageFactory::checkMode(ImageType::bigtiff, mdXmp));
     ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::bigtiff, mdComment));
     ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::bigtiff, mdIccProfile));
-}
-
-TEST(TheImageFactory, getsExpectedModesForNoneValue)
-{
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdNone));
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdExif));
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdIptc));
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdXmp));
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdComment));
-    ASSERT_EQ(amNone, ImageFactory::checkMode(ImageType::none, mdIccProfile));
 }
 
 /// \todo check why JpegBase is taking ImageType in the constructor
