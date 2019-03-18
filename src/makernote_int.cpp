@@ -227,7 +227,7 @@ namespace Exiv2 {
         return 0;
     }
 
-    constexpr byte OlympusMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+//    constexpr byte OlympusMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t OlympusMnHeader::sizeOfSignature()
     {
@@ -274,7 +274,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // OlympusMnHeader::write
 
-    constexpr byte Olympus2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte Olympus2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t Olympus2MnHeader::sizeOfSignature()
     {
@@ -326,8 +326,8 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // Olympus2MnHeader::write
 
-    constexpr byte FujiMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
-    constexpr ByteOrder FujiMnHeader::byteOrder_; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte FujiMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr ByteOrder FujiMnHeader::byteOrder_; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t FujiMnHeader::sizeOfSignature()
     {
@@ -387,7 +387,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // FujiMnHeader::write
 
-    constexpr byte Nikon2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte Nikon2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t Nikon2MnHeader::sizeOfSignature()
     {
@@ -432,7 +432,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // Nikon2MnHeader::write
 
-    constexpr byte Nikon3MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte Nikon3MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t Nikon3MnHeader::sizeOfSignature()
     {
@@ -505,7 +505,7 @@ namespace Exiv2 {
         byteOrder_ = byteOrder;
     }
 
-    constexpr byte PanasonicMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte PanasonicMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t PanasonicMnHeader::sizeOfSignature()
     {
@@ -550,7 +550,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // PanasonicMnHeader::write
 
-    constexpr byte PentaxDngMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte PentaxDngMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
     constexpr uint32_t PentaxDngMnHeader::sizeOfSignature()
     {
         return sizeof(signature_);
@@ -601,7 +601,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // PentaxDngMnHeader::write
 
-    constexpr byte PentaxMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte PentaxMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t PentaxMnHeader::sizeOfSignature()
     {
@@ -676,8 +676,8 @@ namespace Exiv2 {
         return 0;
     } // SamsungMnHeader::write
 
-    constexpr byte SigmaMnHeader::signature1_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
-    constexpr byte SigmaMnHeader::signature2_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte SigmaMnHeader::signature1_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte SigmaMnHeader::signature2_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t SigmaMnHeader::sizeOfSignature()
     {
@@ -724,7 +724,7 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // SigmaMnHeader::write
 
-    constexpr byte SonyMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte SonyMnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t SonyMnHeader::sizeOfSignature()
     {
@@ -769,8 +769,8 @@ namespace Exiv2 {
         return sizeOfSignature();
     } // SonyMnHeader::write
 
-    constexpr byte Casio2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
-    constexpr ByteOrder Casio2MnHeader::byteOrder_; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr byte Casio2MnHeader::signature_[]; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
+    //constexpr ByteOrder Casio2MnHeader::byteOrder_; /// \todo Required in C++11, but deprecated in C++17. Remove this line when we move to C++17.
 
     constexpr uint32_t Casio2MnHeader::sizeOfSignature()
     {
